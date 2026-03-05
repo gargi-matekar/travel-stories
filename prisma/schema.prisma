@@ -1,0 +1,47 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Story {
+  id           String       @id @default(cuid())
+  title        String
+  slug         String       @unique
+  city         String
+  country      String
+  coverImage   String
+  content      String       @db.Text
+  questionAsked String
+  songName     String
+  songEmbedUrl String
+  latitude     Float
+  longitude    Float
+  totalCost    Float
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  moodEntries  MoodEntry[]
+  expenses     Expense[]
+}
+
+model MoodEntry {
+  id      String  @id @default(cuid())
+  day     Int
+  mood    String
+  note    String?
+  storyId String
+  story   Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
+}
+
+model Expense {
+  id      String @id @default(cuid())
+  title   String
+  amount  Float
+  storyId String
+  story   Story  @relation(fields: [storyId], references: [id], onDelete: Cascade)
+}

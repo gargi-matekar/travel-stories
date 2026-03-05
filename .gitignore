@@ -1,0 +1,44 @@
+# Next.js build output
+.next/
+out/
+build/
+
+# Dependencies
+node_modules/
+
+# Production build files
+# For example, in the Next.js docs it mentions that next-env.d.ts should not be tracked
+# by version control, but it is generated during the build.
+# You can uncomment the following to ignore it (if not already handled by .next/).
+# next-env.d.ts
+
+# Miscellaneous
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# npm package manager cache
+.npm/
+
+# optional cloudflare pages deployment directory
+.wrangler/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.vssscc
+.gitignore.lock
