@@ -30,12 +30,10 @@ export interface Story {
   totalCost: number
   createdAt: Date
   updatedAt: Date
-  moodEntries: MoodEntry[]
   expenses: Expense[]
 }
 
 export type StoryListItem = Pick<Story, 'id' | 'title' | 'slug' | 'city' | 'country' | 'coverImage' | 'totalCost' | 'songName' | 'createdAt'> & {
-  moodEntries: Pick<MoodEntry, 'mood'>[]
 }
 
 export interface StoryFormData {
@@ -51,6 +49,5 @@ export interface StoryFormData {
   latitude: number
   longitude: number
   totalCost: number
-  moodEntries: { day: number; mood: string; note: string }[]
   expenses: { title: string; amount: number }[]
 }

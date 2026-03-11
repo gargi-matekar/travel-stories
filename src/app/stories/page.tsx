@@ -8,9 +8,6 @@ export const revalidate = 60
 export default async function StoriesPage() {
   const stories = await prisma.story.findMany({
     orderBy: { createdAt: 'desc' },
-    include: {
-      moodEntries: { orderBy: { day: 'asc' }, take: 1 },
-    },
   })
 
   return (

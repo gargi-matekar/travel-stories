@@ -6,12 +6,6 @@ export async function getAllStories() {
   try {
     const stories = await prisma.story.findMany({
       orderBy: { createdAt: 'desc' },
-      include: {
-        moodEntries: {
-          orderBy: { day: 'asc' },
-          take: 1,
-        },
-      },
     })
     return NextResponse.json(stories)
   } catch (error) {

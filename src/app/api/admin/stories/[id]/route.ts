@@ -1,17 +1,108 @@
 // src/app/api/admin/stories/[id]/route.ts
-import { updateStory } from '@/routes/admin/stories/update'
-import { deleteStory } from '@/routes/admin/stories/delete'
+// PUT  — update a story
+// DELETE — delete a story
 
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+
+// ── PUT: update story core fields ────────────────────────────
 export async function PUT(
-  request: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  return updateStory(request, params.id)
+  try {
+    const id   = params.id
+    const body = await req.json()
+
+    // Pull only the fields that exist on the Story model
+    // (moodEntries removed — do NOT reference prisma.moodEntry here)
+    const {
+      title,
+      slug,
+      city,
+      country,
+      coverImage,
+      content,
+      questionAsked,
+      songName,
+      songEmbedUrl,
+      latitude,
+      longitude,
+      totalCost,
+    } = body
+
+    const story = await prisma.story.update({
+      where: { id },
+      data: {
+        title,
+        slug,
+        city,
+        country,
+        coverImage,
+        content,
+        questionAsked,
+        songName,
+        songEmbedUrl,
+        latitude:  latitude  != null ? parseFloat(latitude)  : undefined,
+        longitude: longitude != null ? parseFloat(longitude) : undefined,
+        totalCost: totalCost != null ? parseFloat(totalCost) : undefined,
+      },
+    })
+
+    return NextResponse.json(story)
+  } catch (err: any) {
+    console.error('[story PUT]', err)
+    return NextResponse.json(
+      { error: 'Database error while updating story', detail: err.message },
+      { status: 500 }
+    )
+  }
 }
 
+// ── DELETE: remove story + all relations (cascade) ───────────
 export async function DELETE(
-  request: Request,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  return deleteStory(request, params.id)
+  try {
+    // Cascade delete is handled by Prisma schema (onDelete: Cascade)
+    // so deleting the story removes expenses, journeySteps, routeStops,
+    // recommendations automatically.
+    await prisma.story.delete({ where: { id: params.id } })
+    return NextResponse.json({ success: true })
+  } catch (err: any) {
+    console.error('[story DELETE]', err)
+    return NextResponse.json(
+      { error: 'Database error while deleting story', detail: err.message },
+      { status: 500 }
+    )
+  }
+}
+
+// ── GET: fetch single story for edit form ─────────────────────
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const story = await prisma.story.findUnique({
+      where: { id: params.id },
+      include: {
+        expenses:        true,
+        journeySteps:    { orderBy: { order: 'asc' } },
+        routeStops:      { orderBy: { order: 'asc' } },
+        recommendations: true,
+      },
+    })
+    if (!story) {
+      return NextResponse.json({ error: 'Story not found' }, { status: 404 })
+    }
+    return NextResponse.json(story)
+  } catch (err: any) {
+    console.error('[story GET]', err)
+    return NextResponse.json(
+      { error: 'Database error', detail: err.message },
+      { status: 500 }
+    )
+  }
 }

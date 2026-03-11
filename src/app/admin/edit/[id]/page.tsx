@@ -11,8 +11,10 @@ export default async function EditStoryPage({
   const story = await prisma.story.findUnique({
     where: { id: params.id },
     include: {
-      moodEntries: { orderBy: { day: 'asc' } },
-      expenses: true,
+      expenses:        true,
+      journeySteps:    { orderBy: { order: 'asc' } },
+      routeStops:      { orderBy: { order: 'asc' } },
+      recommendations: true,
     },
   })
 

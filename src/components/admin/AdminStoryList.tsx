@@ -13,7 +13,7 @@ interface StoryRow {
   slug: string
   totalCost: number
   createdAt: Date
-  _count: { moodEntries: number; expenses: number }
+  _count: {expenses: number }
 }
 
 export default function AdminStoryList({ stories }: { stories: StoryRow[] }) {
@@ -64,7 +64,7 @@ export default function AdminStoryList({ stories }: { stories: StoryRow[] }) {
             <div className="flex items-center gap-4 mt-1">
               <span className="text-gray-500 text-sm">{story.city}, {story.country}</span>
               <span className="text-gray-600 text-xs">
-                {story._count.moodEntries} moods · {story._count.expenses} expenses
+                {story._count.expenses} expenses
               </span>
               <span className="text-sand-600 text-xs">${story.totalCost.toLocaleString()}</span>
             </div>

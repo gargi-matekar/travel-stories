@@ -7,7 +7,6 @@ export async function getStoryBySlug(slug: string) {
     const story = await prisma.story.findUnique({
       where: { slug },
       include: {
-        moodEntries: { orderBy: { day: 'asc' } },
         expenses: true,
       },
     })

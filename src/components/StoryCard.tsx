@@ -11,12 +11,10 @@ interface StoryCardProps {
     coverImage: string
     totalCost: number
     songName: string
-    moodEntries: { mood: string }[]
   }
 }
 
 export default function StoryCard({ story }: StoryCardProps) {
-  const primaryMood = story.moodEntries[0]?.mood
 
   return (
     <Link href={`/stories/${story.slug}`} className="group block">
@@ -30,14 +28,6 @@ export default function StoryCard({ story }: StoryCardProps) {
             style={{ backgroundImage: `url(${story.coverImage})` }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
-
-          <div className="absolute top-4 left-4 flex gap-2">
-            {primaryMood && (
-              <span className="bg-black/50 backdrop-blur-sm border border-white/20 text-white text-xs px-2.5 py-1 rounded-full">
-                {primaryMood}
-              </span>
-            )}
-          </div>
           <div className="absolute top-4 right-4">
             <span className="backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full border border-white/20"
               style={{ backgroundColor: 'rgba(0,0,0,0.45)' }}>

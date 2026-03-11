@@ -15,7 +15,7 @@ export default async function AdminDashboard() {
       totalCost: true,
       createdAt: true,
       _count: {
-        select: { moodEntries: true, expenses: true }
+        select: { expenses: true }
       }
     },
   })

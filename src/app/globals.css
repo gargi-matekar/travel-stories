@@ -6,7 +6,6 @@
 
 /* ═══════════════════════════════════════
    LIGHT MODE — "Aged Explorer's Journal"
-   Kraft parchment · forest ink · rust · compass brass
    ═══════════════════════════════════════ */
 :root {
   --bg-primary:    #f0e6d0;
@@ -31,11 +30,13 @@
 
   --glow-primary:   rgba(181,69,27,0.07);
   --glow-sand:      rgba(184,116,32,0.10);
+
+  /* Floating coordinates — sepia ink on parchment */
+  --coord-color:    rgba(120, 80, 25, 0.55);
 }
 
 /* ═══════════════════════════════════════
    DARK MODE — "Midnight Expedition"
-   Deep navy · compass green · signal orange · starlight
    ═══════════════════════════════════════ */
 .dark {
   --bg-primary:    #0c1118;
@@ -60,6 +61,9 @@
 
   --glow-primary:   rgba(38,212,160,0.05);
   --glow-sand:      rgba(232,134,90,0.07);
+
+  /* Floating coordinates — warm gold on navy */
+  --coord-color:    rgba(200, 180, 140, 0.8);
 }
 
 /* ═══════════════════════════════════════
@@ -131,7 +135,9 @@
 }
 
 /* ═══════════════════════════════════════
-   DARK MODE — fixed starfield
+   DARK MODE — fixed starfield (CSS fallback)
+   NOTE: StarFieldBackground canvas overrides this on desktop.
+   This remains as a lightweight mobile fallback.
    ═══════════════════════════════════════ */
 .dark body::after {
   content: '';
@@ -163,7 +169,6 @@
    KEYFRAMES
    ═══════════════════════════════════════ */
 
-/* Starfield slow float */
 @keyframes stars-drift {
   0%   { transform: translate(0, 0); }
   25%  { transform: translate(-4px, -6px); }
@@ -172,26 +177,23 @@
   100% { transform: translate(0, 0); }
 }
 
-/* Light mode — sun dial rotation glow in hero */
 @keyframes sun-sweep {
   0%   { transform: rotate(-15deg) scale(1);   opacity: 0.06; }
   50%  { transform: rotate(15deg)  scale(1.04); opacity: 0.1;  }
   100% { transform: rotate(-15deg) scale(1);   opacity: 0.06; }
 }
 
-/* Dark mode — compass needle oscillate */
 @keyframes compass-pulse {
   0%, 100% { transform: rotate(-5deg); }
   50%       { transform: rotate(5deg); }
 }
 
-/* Dark mode — scan line sweep */
+/* Scanline used ONLY on non-hero sections via .section-scanline class */
 @keyframes scanline {
   0%   { top: -10%; }
-  100% { top: 110%;  }
+  100% { top: 110%; }
 }
 
-/* Entrance animations */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(22px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -219,25 +221,21 @@
   to   { stroke-dashoffset: 0; }
 }
 
-/* Light mode hero: ink stamp reveal */
 @keyframes ink-reveal {
   0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
   100% { clip-path: inset(0 0% 0 0);   opacity: 1; }
 }
 
-/* Dark mode hero: terminal type-in feel */
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
 
-/* Green accent glow pulse (dark) */
 @keyframes green-glow {
   0%, 100% { box-shadow: 0 0 0 0 rgba(38,212,160,0); }
   50%       { box-shadow: 0 0 18px 3px rgba(38,212,160,0.18); }
 }
 
-/* Rust accent glow pulse (light) */
 @keyframes rust-glow {
   0%, 100% { box-shadow: 0 0 0 0 rgba(181,69,27,0); }
   50%       { box-shadow: 0 0 14px 2px rgba(181,69,27,0.20); }
@@ -254,7 +252,6 @@
 .animate-pin-drop         { animation: pin-drop 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
 .animate-stamp            { animation: stamp-in 0.45s cubic-bezier(0.34,1.56,0.64,1) both; }
 
-/* Theme-specific hover glows */
 :root .accent-glow-hover:hover  { animation: rust-glow 1.8s ease infinite; }
 .dark .accent-glow-hover:hover  { animation: green-glow 1.8s ease infinite; }
 
@@ -298,9 +295,10 @@
 }
 
 /* ═══════════════════════════════════════
-   DARK MODE — SCANLINE SWEEP
+   SCANLINE — only on .section-scanline
+   NOT on hero. This was the fluorescent line bug.
    ═══════════════════════════════════════ */
-.dark .scanline-sweep::after {
+.dark .section-scanline::after {
   content: '';
   position: absolute;
   left: 0; right: 0;
@@ -391,7 +389,6 @@
 .leaflet-control-attribution { background: rgba(0,0,0,0.45) !important; color: var(--text-muted) !important; font-size: 9px !important; }
 .leaflet-control-attribution a { color: var(--text-muted) !important; }
 
-/* Card icon accent on hover */
 .group:hover .group-hover\:text-theme-accent {
   color: var(--accent) !important;
 }

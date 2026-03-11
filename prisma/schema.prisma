@@ -9,34 +9,29 @@ datasource db {
 }
 
 model Story {
-  id           String       @id @default(cuid())
-  title        String
-  slug         String       @unique
-  city         String
-  country      String
-  coverImage   String
-  content      String       @db.Text
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  city          String
+  country       String
+  coverImage    String
+  content       String   @db.Text
   questionAsked String
-  songName     String
-  songEmbedUrl String
-  latitude     Float
-  longitude    Float
-  totalCost    Float
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  songName      String
+  songEmbedUrl  String
+  latitude      Float
+  longitude     Float
+  totalCost     Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  moodEntries  MoodEntry[]
-  expenses     Expense[]
+  expenses        Expense[]
+  journeySteps    JourneyStep[]
+  routeStops      RouteStop[]
+  recommendations Recommendation[]
 }
 
-model MoodEntry {
-  id      String  @id @default(cuid())
-  day     Int
-  mood    String
-  note    String?
-  storyId String
-  story   Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
-}
+// MoodEntry removed
 
 model Expense {
   id      String @id @default(cuid())
@@ -44,4 +39,46 @@ model Expense {
   amount  Float
   storyId String
   story   Story  @relation(fields: [storyId], references: [id], onDelete: Cascade)
+}
+
+model JourneyStep {
+  id          String  @id @default(cuid())
+  storyId     String
+  title       String
+  description String  @db.Text
+  time        String?
+  imageUrl    String?
+  order       Int     @default(0)
+  story       Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@index([storyId, order])
+}
+
+model RouteStop {
+  id        String  @id @default(cuid())
+  storyId   String
+  name      String
+  note      String?
+  latitude  Float
+  longitude Float
+  imageUrl  String?
+  order     Int     @default(0)
+  story     Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@index([storyId, order])
+}
+
+model Recommendation {
+  id            String  @id @default(cuid())
+  storyId       String
+  name          String
+  type          String  // "food" | "place" | "shopping"
+  description   String
+  latitude      Float?
+  longitude     Float?
+  googleMapsUrl String?
+  priceRange    String?
+  story         Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@index([storyId])
 }
