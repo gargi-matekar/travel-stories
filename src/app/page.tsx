@@ -42,11 +42,7 @@ export default async function HomePage() {
       <ConstellationBackground />
 
       <main className="bg-theme-primary text-theme-primary" style={{ position: 'relative', zIndex: 1 }}>
-
-        {/* ═══ SECTION 1: HERO ═══════════════════════════════════════════════
-            NOTE: "scanline-sweep" class REMOVED from this section — that was
-            the fluorescent horizontal line you saw. The hero-rays div and
-            radial glow remain for the light/dark theme effect.              */}
+        
         <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
 
           {/* ① Star field canvas — absolute, z-index 0, desktop only */}

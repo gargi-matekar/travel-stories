@@ -188,11 +188,7 @@
   50%       { transform: rotate(5deg); }
 }
 
-/* Scanline used ONLY on non-hero sections via .section-scanline class */
-@keyframes scanline {
-  0%   { top: -10%; }
-  100% { top: 110%; }
-}
+/* Scanline removed — was causing moving line bug */
 
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(22px); }
@@ -292,25 +288,6 @@
 
 .dark .hero-rays::before {
   background: none;
-}
-
-/* ═══════════════════════════════════════
-   SCANLINE — only on .section-scanline
-   NOT on hero. This was the fluorescent line bug.
-   ═══════════════════════════════════════ */
-.dark .section-scanline::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  height: 80px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(38,212,160,0.03) 50%,
-    transparent 100%
-  );
-  animation: scanline 8s linear infinite;
-  pointer-events: none;
 }
 
 /* ═══════════════════════════════════════
