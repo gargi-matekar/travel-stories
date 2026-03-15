@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { verifyAdmin } from '../auth/verifyAdmin'
 
 export async function deleteStory(request: Request, id: string) {
-  const authError = verifyAdmin(request)
+  const authError = verifyAdmin()
   if (authError) return authError.error
 
   try {
