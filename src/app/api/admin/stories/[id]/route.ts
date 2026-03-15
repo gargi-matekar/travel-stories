@@ -13,7 +13,6 @@ export async function PUT(
   try {
     const id   = params.id
     const body = await req.json()
-
     // Pull only the fields that exist on the Story model
     // (moodEntries removed — do NOT reference prisma.moodEntry here)
     const {
@@ -29,6 +28,7 @@ export async function PUT(
       latitude,
       longitude,
       totalCost,
+      tripId,
     } = body
 
     const story = await prisma.story.update({
@@ -46,6 +46,7 @@ export async function PUT(
         latitude:  latitude  != null ? parseFloat(latitude)  : undefined,
         longitude: longitude != null ? parseFloat(longitude) : undefined,
         totalCost: totalCost != null ? parseFloat(totalCost) : undefined,
+        tripId:    tripId ?? null,
       },
     })
 

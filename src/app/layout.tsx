@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import './globals.css'
 import { LazyWorldMap } from '@/components/animations'
+import NavBar from '@/components/NavBar'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Travel Stories — Cinematic Journeys',
@@ -14,7 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className="bg-theme-primary text-theme-primary antialiased min-h-screen">
         <LazyWorldMap />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <NavBar />
+          {children}
+          <Footer />
+          </ThemeProvider>
       </body>
     </html>
   )

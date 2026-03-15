@@ -15,6 +15,8 @@ export default async function EditStoryPage({
       journeySteps:    { orderBy: { order: 'asc' } },
       routeStops:      { orderBy: { order: 'asc' } },
       recommendations: true,
+      cityFrames:      { orderBy: { order: 'asc' } },   // NEW
+      photoMemories:   { orderBy: { order: 'asc' } },   // NEW
     },
   })
 

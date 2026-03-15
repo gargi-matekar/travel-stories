@@ -26,6 +26,9 @@ export default function NavBar({ transparent = false }: NavBarProps) {
           <Link href="/stories" className="text-sm tracking-wide text-theme-secondary hover:text-theme-primary transition-colors">
             Stories
           </Link>
+          <Link href="/trips" className="text-sm tracking-wide text-theme-secondary hover:text-theme-primary transition-colors">
+            Trips
+          </Link>
           <Link href="/map" className="text-sm tracking-wide text-theme-secondary hover:text-theme-primary transition-colors">
             Map
           </Link>

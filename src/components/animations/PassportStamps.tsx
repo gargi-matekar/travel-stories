@@ -24,19 +24,19 @@ export default function PassportStamps() {
   }, [])
 
   // Theme colours
-  const inkColor  = dark ? 'rgba(210,175,110,1)'  : 'rgba(120,70,20,1)'
-  const inkFaint  = dark ? 'rgba(210,175,110,0.7)' : 'rgba(120,70,20,0.7)'
-  const inkMuted  = dark ? 'rgba(210,175,110,0.5)' : 'rgba(120,70,20,0.5)'
+  const inkColor = dark ? 'rgba(210,175,110,1)' : 'rgba(120,70,20,1)'
+  const inkFaint = dark ? 'rgba(210,175,110,0.7)' : 'rgba(120,70,20,0.7)'
+  const inkMuted = dark ? 'rgba(210,175,110,0.5)' : 'rgba(120,70,20,0.5)'
 
   return (
     <div
       aria-hidden="true"
       style={{
-        position:      'fixed',
-        inset:         0,
+        position: 'fixed',
+        inset: 0,
         pointerEvents: 'none',
-        zIndex:        0,
-        overflow:      'hidden',
+        zIndex: 0,
+        overflow: 'hidden',
       }}
     >
       {STAMPS.map((s, i) => {
@@ -45,13 +45,13 @@ export default function PassportStamps() {
           <div
             key={i}
             style={{
-              position:  'fixed',
-              top:       s.top,
-              left:      s.left,
+              position: 'fixed',
+              top: s.top,
+              left: s.left,
               opacity,
               transform: `rotate(${s.rotate}deg)`,
-              width:     s.size,
-              height:    s.size,
+              width: s.size,
+              height: s.size,
             }}
           >
             <StampSVG
@@ -149,8 +149,8 @@ function StampSVG({ city, date, type, inkColor, inkFaint, inkMuted }: StampSVGPr
       </text>
 
       {/* Corner crosshairs */}
-      {([[-1,-1],[1,-1],[-1,1],[1,1]] as [number,number][]).map(([cx, cy], j) => (
-        <g key={j} transform={`translate(${60 + cx*44} ${60 + cy*44})`}>
+      {([[-1, -1], [1, -1], [-1, 1], [1, 1]] as [number, number][]).map(([cx, cy], j) => (
+        <g key={j} transform={`translate(${60 + cx * 44} ${60 + cy * 44})`}>
           <line x1="-5" y1="0" x2="5" y2="0" stroke={inkMuted} strokeWidth="0.6" />
           <line x1="0" y1="-5" x2="0" y2="5" stroke={inkMuted} strokeWidth="0.6" />
         </g>
@@ -163,27 +163,49 @@ function StampSVG({ city, date, type, inkColor, inkFaint, inkMuted }: StampSVGPr
 
 const STAMPS = [
   // Left edge — top
-  { city: 'Varanasi',    date: '2024 · NOV', type: 'wave',
-    top: '12%',  left: '-18px', rotate: -8,  size: '110px',
-    opacityLight: 0.22, opacityDark: 0.14 },
+  {
+    city: 'Varanasi', date: '2024 · NOV', type: 'wave',
+    top: '10%', left: '300px', rotate: -8, size: '110px',
+    opacityLight: 0.22, opacityDark: 0.14
+  },
   // Right edge — top
-  { city: 'Rameshwaram', date: '2024 · MAR', type: 'compass',
-    top: '20%',  left: 'calc(100vw - 95px)', rotate: 6, size: '100px',
-    opacityLight: 0.20, opacityDark: 0.12 },
+  {
+    city: 'Rameshwaram', date: '2024 · MAR', type: 'compass',
+    top: '18%', left: 'calc(100vw - 200px)', rotate: 6, size: '100px',
+    opacityLight: 0.20, opacityDark: 0.12
+  },
   // Left edge — middle
-  { city: 'Hampi',       date: '2023 · DEC', type: 'mountain',
-    top: '44%',  left: '-14px', rotate: -5, size: '95px',
-    opacityLight: 0.18, opacityDark: 0.11 },
+  {
+    city: 'Hampi', date: '2023 · DEC', type: 'mountain',
+    top: '40%', left: '10px', rotate: -5, size: '95px',
+    opacityLight: 0.18, opacityDark: 0.11
+  },
+  {
+    city: 'Haridwar', date: '2023 · DEC', type: 'mountain',
+    top: '50%', left: '200px', rotate: -5, size: '95px',
+    opacityLight: 0.18, opacityDark: 0.11
+  },
   // Right edge — middle-low
-  { city: 'Kolkata',     date: '2023 · AUG', type: 'wave',
-    top: '58%',  left: 'calc(100vw - 88px)', rotate: 9, size: '105px',
-    opacityLight: 0.20, opacityDark: 0.12 },
+  {
+    city: 'Kolkata', date: '2023 · AUG', type: 'wave',
+    top: '45%', left: 'calc(100vw - 388px)', rotate: 9, size: '105px',
+    opacityLight: 0.20, opacityDark: 0.12
+  },
   // Left edge — low
-  { city: 'Ladakh',      date: '2023 · JUL', type: 'mountain',
-    top: '74%',  left: '-16px', rotate: -4, size: '90px',
-    opacityLight: 0.18, opacityDark: 0.10 },
+  {
+    city: 'Ladakh', date: '2023 · JUL', type: 'mountain',
+    top: '74%', left: '-16px', rotate: -4, size: '90px',
+    opacityLight: 0.18, opacityDark: 0.10
+  },
   // Right edge — bottom
-  { city: 'Pondicherry', date: '2024 · JAN', type: 'compass',
-    top: '82%',  left: 'calc(100vw - 92px)', rotate: 7, size: '98px',
-    opacityLight: 0.20, opacityDark: 0.11 },
+  {
+    city: 'Pondicherry', date: '2024 · JAN', type: 'compass',
+    top: '82%', left: 'calc(100vw - 92px)', rotate: 7, size: '98px',
+    opacityLight: 0.20, opacityDark: 0.11
+  },
+  {
+    city: 'Rishikesh', date: '2024 · JAN', type: 'compass',
+    top: '40%', left: 'calc(100vw - 92px)', rotate: 7, size: '98px',
+    opacityLight: 0.20, opacityDark: 0.11
+  },
 ]

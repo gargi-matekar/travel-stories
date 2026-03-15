@@ -8,11 +8,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Trip {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  description String?
+  coverImage  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  stories     Story[]
+  expenses    TripExpense[]   // ← renamed to avoid conflict with Story expenses
+}
+
+model TripExpense {
+  id     String @id @default(cuid())
+  tripId String
+  trip   Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  title  String
+  amount Float
+
+  @@index([tripId])
+}
+
 model Story {
   id            String   @id @default(cuid())
   title         String
   slug          String   @unique
   city          String
+  state         String?
   country       String
   coverImage    String
   content       String   @db.Text
@@ -22,16 +46,20 @@ model Story {
   latitude      Float
   longitude     Float
   totalCost     Float
+  coordinates   String?
+  closingReflection String?
+  tripId        String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
+  trip            Trip?            @relation(fields: [tripId], references: [id], onDelete: SetNull)
   expenses        Expense[]
   journeySteps    JourneyStep[]
   routeStops      RouteStop[]
   recommendations Recommendation[]
+  cityFrames      CityFrame[]
+  photoMemories   PhotoMemory[]
 }
-
-// MoodEntry removed
 
 model Expense {
   id      String @id @default(cuid())
@@ -72,7 +100,7 @@ model Recommendation {
   id            String  @id @default(cuid())
   storyId       String
   name          String
-  type          String  // "food" | "place" | "shopping"
+  type          String
   description   String
   latitude      Float?
   longitude     Float?
@@ -81,4 +109,27 @@ model Recommendation {
   story         Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   @@index([storyId])
+}
+
+model CityFrame {
+  id          String  @id @default(cuid())
+  storyId     String
+  title       String
+  description String?
+  imageUrl    String
+  order       Int     @default(0)
+  story       Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@index([storyId, order])
+}
+
+model PhotoMemory {
+  id       String  @id @default(cuid())
+  storyId  String
+  imageUrl String
+  caption  String?
+  order    Int     @default(0)
+  story    Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@index([storyId, order])
 }

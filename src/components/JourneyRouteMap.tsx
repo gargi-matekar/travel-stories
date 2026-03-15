@@ -59,7 +59,7 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
     const mid = coords[Math.floor(coords.length / 2)]
 
     // ── Create map ──────────────────────────────────────────
-    const map = L.map(containerRef.current, {
+    const maps = L.map(containerRef.current, {
       center: mid,
       zoom: 13,
       zoomControl: false,
@@ -68,7 +68,7 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
       scrollWheelZoom: false,
     })
 
-    mapInstanceRef.current = map
+    mapInstanceRef.current = maps
 
     // ── Dark tile layer (CartoDB Dark Matter) ───────────────
     // Using unpkg CDN for reliability — no API key needed
@@ -80,7 +80,7 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
         subdomains: 'abcd',
         maxZoom: 20,
       }
-    ).addTo(map)
+    ).addTo(maps)
 
     // Zoom control bottom-left
     L.control.zoom({ position: 'bottomleft' }).addTo(map)
@@ -92,7 +92,7 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
       opacity: 0.05,
       lineCap: 'round',
       lineJoin: 'round',
-    }).addTo(map)
+    }).addTo(maps)
 
     // ── Build interpolated points for smooth animation ──────
     const STEPS_PER_SEGMENT = 60
@@ -113,7 +113,7 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
       opacity: 1,
       lineCap: 'round',
       lineJoin: 'round',
-    }).addTo(map)
+    }).addTo(maps)
 
     // Glow layer
     const glowLine = L.polyline([], {
@@ -122,7 +122,7 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
       opacity: 0.15,
       lineCap: 'round',
       lineJoin: 'round',
-    }).addTo(map)
+    }).addTo(maps)
 
     // ── Moving dot at tip ───────────────────────────────────
     const dotIcon = L.divIcon({
@@ -135,7 +135,7 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
       icon: dotIcon,
       zIndexOffset: 1000,
       interactive: false,
-    }).addTo(map)
+    }).addTo(maps)
 
     // ── Animate draw ────────────────────────────────────────
     // SLOW: 1 point per frame = very smooth and cinematic
@@ -178,14 +178,14 @@ export default function JourneyRouteMap({ stops }: JourneyRouteMapProps) {
         icon,
         zIndexOffset: 500,
       })
-        .addTo(map)
+        .addTo(maps)
         .on('click', () => setActiveStop((prev) => (prev?.id === stop.id ? null : stop)))
     })
 
     // ── Fit bounds ──────────────────────────────────────────
     if (coords.length > 1) {
       const bounds = L.latLngBounds(coords)
-      map.fitBounds(bounds, { padding: [60, 60], maxZoom: 14, animate: true })
+      maps.fitBounds(bounds, { padding: [60, 60], maxZoom: 14, animate: true })
     }
   }, [replayKey]) // eslint-disable-line react-hooks/exhaustive-deps
 

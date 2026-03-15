@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 export default function StoryContent({ content }: { content: string }) {
+  const normalized = content.replace(/^(#{1,6})([^\s#])/gm, '$1 $2')
   return (
     <div className="prose-dark max-w-none">
       <ReactMarkdown
@@ -52,7 +53,7 @@ export default function StoryContent({ content }: { content: string }) {
           ),
         }}
       >
-        {content}
+        {normalized}
       </ReactMarkdown>
     </div>
   )

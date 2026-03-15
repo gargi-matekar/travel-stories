@@ -1,37 +1,37 @@
 // src/components/SongPlayer.tsx
 export default function SongPlayer({
   songName,
-  embedUrl,
+  songEmbedUrl,
 }: {
   songName: string
-  embedUrl: string
+  songEmbedUrl: string
 }) {
-  const isSpotify = embedUrl.includes('spotify')
-  const isYouTube = embedUrl.includes('youtube') || embedUrl.includes('youtu.be')
+  const isSpotify = songEmbedUrl.includes('spotify')
+  const isYouTube = songEmbedUrl.includes('youtube') || songEmbedUrl.includes('youtu.be')
 
   // Convert any Spotify URL to an embed URL
   // e.g. https://open.spotify.com/track/xxx → https://open.spotify.com/embed/track/xxx
   const resolvedUrl = (() => {
     if (isSpotify) {
       // Already an embed URL
-      if (embedUrl.includes('/embed/')) return embedUrl
+      if (songEmbedUrl.includes('/embed/')) return songEmbedUrl
       // Convert open.spotify.com/track/... → open.spotify.com/embed/track/...
-      return embedUrl.replace(
+      return songEmbedUrl.replace(
         /https:\/\/open\.spotify\.com\/(track|album|playlist|episode)\//,
         'https://open.spotify.com/embed/$1/'
       )
     }
     if (isYouTube) {
       // Convert youtu.be short links
-      const shortMatch = embedUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/)
+      const shortMatch = songEmbedUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/)
       if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`
       // Convert watch?v= links
-      const watchMatch = embedUrl.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/)
+      const watchMatch = songEmbedUrl.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/)
       if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`
       // Already an embed URL
-      return embedUrl
+      return songEmbedUrl
     }
-    return embedUrl
+    return songEmbedUrl
   })()
 
   return (
