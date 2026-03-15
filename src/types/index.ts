@@ -117,7 +117,7 @@ export interface StoryFormData {
   expenses: { title: string; amount: number }[]
 }
 
-export type StoryListItem = Pick
+export type StoryListItem = Pick<
   Story,
   'id' | 'title' | 'slug' | 'city' | 'state' | 'country' | 'coverImage' | 'totalCost' | 'songName' | 'createdAt'
 >
