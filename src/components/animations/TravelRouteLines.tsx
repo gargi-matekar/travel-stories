@@ -1,13 +1,6 @@
 'use client'
 
-// components/animations/TravelRouteLines.tsx
-// Journey section backdrop — animated SVG route lines
-// Dark mode:  warm orange glow routes on navy
-// Light mode: rust/sepia ink routes on parchment — slightly more opaque
-// Detects theme via .dark on <html>
-
 import { useEffect, useRef, useState } from 'react'
-
 interface RoutePoint { x: number; y: number }
 interface Route { points: RoutePoint[]; label: string; dashLen: number }
 

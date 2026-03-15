@@ -26,7 +26,7 @@ interface Particle {
   hovered: boolean
 }
 
-export default function FloatingPolaroids({ photos }: Props) {
+export default function FloatingPolaroids({ photos = [] }: Props) {
   const containerRef  = useRef<HTMLDivElement>(null)
   const itemRefs      = useRef<(HTMLDivElement | null)[]>([])
   const captionRefs   = useRef<(HTMLParagraphElement | null)[]>([])
@@ -36,6 +36,8 @@ export default function FloatingPolaroids({ photos }: Props) {
 
   const [isMobile, setIsMobile] = useState(false)
   const [mounted,  setMounted]  = useState(false)
+
+  if (!photos || photos.length === 0) return null
 
   // ── Initialise on client only ──────────────────────────────────────────────
   useEffect(() => {
