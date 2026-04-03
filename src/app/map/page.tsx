@@ -1,4 +1,5 @@
 // src/app/map/page.tsx
+export const dynamic = 'force-dynamic'
 import { prisma } from '@/lib/prisma'
 import WorldMap from '@/components/WorldMap'
 import NavBar from '@/components/NavBar'

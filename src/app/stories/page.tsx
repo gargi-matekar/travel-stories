@@ -1,4 +1,5 @@
 // src/app/stories/page.tsx
+export const dynamic = 'force-dynamic'
 import { prisma } from '@/lib/prisma'
 import StoryCard from '@/components/StoryCard'
 import NavBar from '@/components/NavBar'

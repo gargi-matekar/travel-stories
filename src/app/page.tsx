@@ -1,18 +1,19 @@
 // src/app/page.tsx
+export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 import NavBar from '@/components/NavBar'
 import StoryCard from '@/components/StoryCard'
 import { prisma } from '@/lib/prisma'
 import MoodChips from '@/components/MoodChips'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 
 // ── Animation components — all ssr:false to avoid hydration mismatch ──────────
-const StarFieldBackground = dynamic(() => import('@/components/animations/StarFieldBackground'), { ssr: false })
-const FloatingCoordinates = dynamic(() => import('@/components/animations/FloatingCoordinates'), { ssr: false })
-const TravelRouteLines = dynamic(() => import('@/components/animations/TravelRouteLines'), { ssr: false })
-const ParallaxMountains = dynamic(() => import('@/components/animations/ParallaxMountains'), { ssr: false })
+const StarFieldBackground = nextDynamic(() => import('@/components/animations/StarFieldBackground'), { ssr: false })
+const FloatingCoordinates = nextDynamic(() => import('@/components/animations/FloatingCoordinates'), { ssr: false })
+const TravelRouteLines = nextDynamic(() => import('@/components/animations/TravelRouteLines'), { ssr: false })
+const ParallaxMountains = nextDynamic(() => import('@/components/animations/ParallaxMountains'), { ssr: false })
 // ConstellationBackground replaces WorldMapTexture — animated, actually visible
-const ConstellationBackground = dynamic(() => import('@/components/animations/ConstellationBackground'), { ssr: false })
+const ConstellationBackground = nextDynamic(() => import('@/components/animations/ConstellationBackground'), { ssr: false })
 
 async function getFeaturedStory() {
   return prisma.story.findFirst({ orderBy: { createdAt: 'desc' } })

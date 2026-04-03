@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { LazyTravelRoutes, LazyWorldMap } from '@/components/animations'
 import ExplorerMapBackground from '@/components/animations/ExplorerMapBackground'
 import FloatingPolaroids from '@/components/animations/FloatingPolaroids'
