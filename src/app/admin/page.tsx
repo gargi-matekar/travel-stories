@@ -1,4 +1,5 @@
 // src/app/admin/page.tsx
+export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import AdminStoryList from '@/components/admin/AdminStoryList'

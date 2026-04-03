@@ -1,6 +1,7 @@
 // src/app/admin/login/page.tsx
 'use client'
 
+export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -22,9 +23,8 @@ export default function AdminLoginPage() {
     })
 
     if (res.ok) {
-      router.push('/admin')
-      router.refresh()
-    } else {
+      window.location.href = '/admin'
+     } else {
       setError('Invalid password')
       setLoading(false)
     }

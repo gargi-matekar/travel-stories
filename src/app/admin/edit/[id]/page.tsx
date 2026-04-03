@@ -1,4 +1,5 @@
 // src/app/admin/edit/[id]/page.tsx
+export const dynamic = 'force-dynamic'
 import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import AdminStoryForm from '@/components/admin/AdminStoryForm'
