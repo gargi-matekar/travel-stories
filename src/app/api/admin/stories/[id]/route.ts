@@ -19,6 +19,7 @@ export async function PUT(
       title,
       slug,
       city,
+      state,
       country,
       coverImage,
       content,
@@ -29,6 +30,8 @@ export async function PUT(
       longitude,
       totalCost,
       tripId,
+      coordinates,    
+      closingReflection, 
     } = body
 
     const story = await prisma.story.update({
@@ -37,6 +40,7 @@ export async function PUT(
         title,
         slug,
         city,
+        state:state? String(state) : null, 
         country,
         coverImage,
         content,
@@ -47,6 +51,8 @@ export async function PUT(
         longitude: longitude != null ? parseFloat(longitude) : undefined,
         totalCost: totalCost != null ? parseFloat(totalCost) : undefined,
         tripId:    tripId ?? null,
+        coordinates:      coordinates      ?? null, 
+        closingReflection: closingReflection ?? null, 
       },
     })
 
