@@ -334,7 +334,6 @@ export default async function StoryPage({ params }: Props) {
                     position: "absolute",
                     top: -8,
                     left: -8,
-                    zIndex: 3,
                     pointerEvents: "none",
                   }}
                 >
