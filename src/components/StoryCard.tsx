@@ -1,6 +1,6 @@
-// src/components/StoryCard.tsx
 'use client'
 import Link from 'next/link'
+import LikeButton from '@/components/story/LikeButton'
 
 interface StoryCardProps {
   story: {
@@ -15,7 +15,6 @@ interface StoryCardProps {
 }
 
 export default function StoryCard({ story }: StoryCardProps) {
-
   return (
     <Link href={`/stories/${story.slug}`} className="group block">
       <article
@@ -34,7 +33,6 @@ export default function StoryCard({ story }: StoryCardProps) {
               ${story.totalCost.toLocaleString()}
             </span>
           </div>
-
           <div className="absolute bottom-0 left-0 right-0 p-5">
             <p className="text-white/60 text-xs tracking-widest uppercase mb-1">
               {story.city}, {story.country}
@@ -47,7 +45,8 @@ export default function StoryCard({ story }: StoryCardProps) {
 
         <div className="px-5 py-3 flex items-center gap-2" style={{ borderTop: '1px solid var(--border)' }}>
           <span className="text-theme-muted text-xs">♪</span>
-          <p className="text-theme-muted text-xs truncate italic">{story.songName}</p>
+          <p className="text-theme-muted text-xs truncate italic flex-1">{story.songName}</p>
+          <LikeButton slug={story.slug} variant="card" />
         </div>
       </article>
     </Link>

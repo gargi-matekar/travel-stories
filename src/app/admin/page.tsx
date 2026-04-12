@@ -4,9 +4,10 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import AdminStoryList from '@/components/admin/AdminStoryList'
 import DeleteTripButton from '@/components/admin/DeleteTripButton'
+import NewsletterDispatchForm from '@/components/admin/NewsletterDispatchForm'
 
 export default async function AdminDashboard() {
-  const [stories, trips] = await Promise.all([
+  const [stories, trips, subscriberCount] = await Promise.all([
     prisma.story.findMany({
       orderBy: { createdAt: 'desc' },
       select: {
@@ -24,10 +25,14 @@ export default async function AdminDashboard() {
       orderBy: { createdAt: 'desc' },
       include: { stories: { select: { city: true } } },
     }),
+    prisma.subscriber.count(),
   ])
 
   return (
     <div>
+
+      {/* ── NEWSLETTER ────────────────────────────────────────── */}
+      <NewsletterDispatchForm subscriberCount={subscriberCount} />
 
       {/* ── TRIPS ─────────────────────────────────────────────── */}
       <div className="flex items-center justify-between mb-6">
@@ -68,18 +73,8 @@ export default async function AdminDashboard() {
                 </p>
               </div>
               <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Link
-                  href={`/trips/${trip.slug}`}
-                  className="text-xs text-gray-500 hover:text-white transition-colors"
-                >
-                  View
-                </Link>
-                <Link
-                  href={`/admin/trips/edit/${trip.id}`}
-                  className="text-xs text-sand-400 hover:text-sand-300 transition-colors"
-                >
-                  Edit
-                </Link>
+                <Link href={`/trips/${trip.slug}`} className="text-xs text-gray-500 hover:text-white transition-colors">View</Link>
+                <Link href={`/admin/trips/edit/${trip.id}`} className="text-xs text-sand-400 hover:text-sand-300 transition-colors">Edit</Link>
                 <DeleteTripButton tripId={trip.id} />
               </div>
             </div>

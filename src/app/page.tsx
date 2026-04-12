@@ -6,6 +6,7 @@ import StoryCard from '@/components/StoryCard'
 import { prisma } from '@/lib/prisma'
 import MoodChips from '@/components/MoodChips'
 import nextDynamic from 'next/dynamic'
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 // ── Animation components — all ssr:false to avoid hydration mismatch ──────────
 const StarFieldBackground = nextDynamic(() => import('@/components/animations/StarFieldBackground'), { ssr: false })
@@ -321,6 +322,8 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+        {/* ═══ SECTION *: NEWSLETTER ═══════════════════════════════════════════════*/}
+        <NewsletterSignup variant="homepage" />
 
         {/* ═══ SECTION 8: QUOTE ═══════════════════════════════════════════════ */}
         <section className="py-28 px-6 border-t border-theme relative overflow-hidden">

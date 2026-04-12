@@ -45,57 +45,6 @@ export function SkeletonPulse({ className = '' }: { className?: string }) {
     )
   }
   
-  // Story detail hero skeleton
-  export function StoryHeroSkeleton() {
-    return (
-      <div className="relative h-screen min-h-[600px] bg-ink-800 animate-pulse">
-        <div className="absolute bottom-16 left-6 right-6 max-w-5xl mx-auto space-y-4">
-          <div className="h-3 w-32 bg-white/10 rounded" />
-          <div className="h-14 w-3/4 bg-white/10 rounded" />
-          <div className="h-10 w-1/2 bg-white/10 rounded" />
-        </div>
-      </div>
-    )
-  }
-  
-  // Story detail section skeleton
-  export function StorySectionSkeleton() {
-    return (
-      <div className="max-w-4xl mx-auto px-6 space-y-16 py-12">
-        {/* Question */}
-        <div className="text-center space-y-4 py-8">
-          <div className="h-3 w-40 bg-white/5 rounded mx-auto animate-pulse" />
-          <div className="h-12 w-3/4 bg-white/5 rounded mx-auto animate-pulse" />
-        </div>
-        {/* Song */}
-        <div className="space-y-4 py-4 border-t border-white/5">
-          <div className="h-3 w-32 bg-white/5 rounded animate-pulse" />
-          <div className="h-7 w-64 bg-white/5 rounded animate-pulse" />
-          <div className="h-40 w-full bg-white/5 rounded animate-pulse" />
-        </div>
-        {/* Mood */}
-        <div className="space-y-6 py-4 border-t border-white/5">
-          <div className="h-3 w-28 bg-white/5 rounded animate-pulse" />
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="flex gap-6 pl-10 relative">
-              <div className="absolute left-0 top-1 w-6 h-6 rounded-full bg-white/5 animate-pulse" />
-              <div className="space-y-2 flex-1">
-                <div className="h-3 w-20 bg-white/5 rounded animate-pulse" />
-                <div className="h-4 w-48 bg-white/5 rounded animate-pulse" />
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* Content */}
-        <div className="space-y-4 border-t border-white/5 pt-8">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className={`h-4 bg-white/5 rounded animate-pulse ${i % 3 === 2 ? 'w-4/5' : 'w-full'}`} />
-          ))}
-        </div>
-      </div>
-    )
-  }
-  
   // Admin table skeleton
   export function AdminTableSkeleton() {
     return (

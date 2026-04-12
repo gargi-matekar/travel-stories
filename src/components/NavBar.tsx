@@ -32,29 +32,10 @@ export default function NavBar({ transparent = false }: NavBarProps) {
           <Link href="/map" className="text-sm tracking-wide text-theme-secondary hover:text-theme-primary transition-colors">
             Map
           </Link>
+          <Link href="/explore" className="text-sm tracking-wide text-theme-secondary hover:text-theme-primary transition-colors">
+            Explore
+          </Link>
 
-          {/* Toggle — sliding pill track */}
-          <button
-            onClick={toggle}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-theme transition-all duration-200 hover:bg-theme-muted"
-          >
-            {/* Track */}
-            <div
-              className="relative w-9 h-5 rounded-full flex-shrink-0 transition-colors duration-300"
-              style={{ backgroundColor: isDark ? 'var(--accent)' : 'var(--bg-muted)', border: '1px solid var(--border)' }}
-            >
-              {/* Thumb */}
-              <div
-                className="absolute top-0.5 w-4 h-4 rounded-full shadow-sm transition-all duration-300"
-                style={{
-                  left: isDark ? '18px' : '2px',
-                  backgroundColor: isDark ? '#fff' : 'var(--accent)',
-                }}
-              />
-            </div>
-            <span className="text-sm select-none">{isDark ? '🌙' : '☀️'}</span>
-          </button>
         </div>
       </div>
     </nav>

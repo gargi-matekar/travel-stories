@@ -12,6 +12,11 @@ import JourneyTimeline from "@/components/JourneyTimeline";
 import PartOfATripSection from "@/components/story/PartOfATripSection";
 import ClosingReflection from "@/components/story/ClosingReflection";
 import StoryContent from "@/components/StoryContent";
+import NewsletterSignup from "@/components/NewsletterSignup";
+import ShareBar from "@/components/story/ShareBar";
+import LikeButton from '@/components/story/LikeButton'
+
+import type { Metadata } from 'next'
 
 interface Props {
   params: { slug: string };
@@ -20,6 +25,65 @@ interface Props {
 export async function generateStaticParams() {
   const stories = await prisma.story.findMany({ select: { slug: true } });
   return stories.map((s) => ({ slug: s.slug }));
+}
+
+const BASE_URL = 'https://travel-stories-eight.vercel.app'
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const story = await prisma.story.findUnique({
+    where: { slug: params.slug },
+    select: {
+      title: true,
+      city: true,
+      state: true,
+      country: true,
+      coverImage: true,
+      coordinates: true,
+      slug: true,
+    },
+  })
+
+  if (!story) return {}
+
+  const subtitle = [story.state, story.country].filter(Boolean).join(' · ')
+  const pageTitle = `${story.city} — ${story.title}`
+  const description = `A cinematic travel story from ${story.city}${subtitle ? ', ' + subtitle : ''}. ${story.title} · Stories from the road, by Gargi.`
+
+  const ogImageUrl =
+    `${BASE_URL}/og?` +
+    new URLSearchParams({
+      title:   story.title,
+      city:    story.city,
+      state:   story.state   ?? '',
+      country: story.country ?? '',
+      image:   story.coverImage ?? '',
+      coords:  story.coordinates ?? '',
+    }).toString()
+
+  return {
+    title: pageTitle,
+    description,
+    openGraph: {
+      title: pageTitle,
+      description,
+      type: 'article',
+      url: `${BASE_URL}/stories/${story.slug}`,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${story.city} — TheRoamingPostcards`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description,
+      images: [ogImageUrl],
+    },
+  }
 }
 
 export default async function StoryPage({ params }: Props) {
@@ -857,6 +921,9 @@ export default async function StoryPage({ params }: Props) {
                 >
                   {story.title}
                 </p>
+                <div style={{ marginTop: '16px' }}>
+                  <LikeButton slug={story.slug} variant="page" />
+                </div>
               </div>
 
               {/* bottom: address lines + coordinates */}
@@ -1056,7 +1123,16 @@ export default async function StoryPage({ params }: Props) {
       {/* ── 10. PART OF A LARGER TRIP ───────────────────────────── */}
       {story.trip && <PartOfATripSection trip={story.trip} />}
 
-      {/* ── 11. CLOSING REFLECTION ──────────────────────────────── */}
+      {/* ── 11. NEWSLETTER SIGNUP ──────────────────────────────── */}
+      <NewsletterSignup
+        variant="story"
+        storySlug={story.slug}
+        storyCity={story.city}
+      />
+
+      <ShareBar title={story.title} city={story.city} slug={story.slug} />  
+
+      {/* ── 12. CLOSING REFLECTION ──────────────────────────────── */}
       {story.closingReflection && (
         <ClosingReflection
           reflection={story.closingReflection}
