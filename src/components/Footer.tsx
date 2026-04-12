@@ -29,7 +29,7 @@ export default function Footer() {
                                 <p className="text-[10px] tracking-[0.3em] uppercase mb-5" style={{ color: 'var(--text-muted)' }}>Connect</p>
                                 <div className="gap-3 flex flex-col justify-center items-center">
                                     <a
-                                        href="https://instagram.com/YOUR_HANDLE"
+                                        href="https://instagram.com/theroamingpostcards"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-gray-600 transition-all hover:scale-110 hover:text-pink-500"

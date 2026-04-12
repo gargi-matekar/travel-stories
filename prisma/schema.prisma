@@ -18,7 +18,7 @@ model Trip {
   updatedAt   DateTime  @updatedAt
 
   stories     Story[]
-  expenses    TripExpense[]   // ← renamed to avoid conflict with Story expenses
+  expenses    TripExpense[]
 }
 
 model TripExpense {
@@ -32,25 +32,25 @@ model TripExpense {
 }
 
 model Story {
-  id            String   @id @default(cuid())
-  title         String
-  slug          String   @unique
-  city          String
-  state         String?
-  country       String
-  coverImage    String
-  content       String   @db.Text
-  questionAsked String
-  songName      String
-  songEmbedUrl  String
-  latitude      Float
-  longitude     Float
-  totalCost     Float
-  coordinates   String?
+  id                String   @id @default(cuid())
+  title             String
+  slug              String   @unique
+  city              String
+  state             String?
+  country           String
+  coverImage        String
+  content           String   @db.Text
+  questionAsked     String
+  songName          String
+  songEmbedUrl      String
+  latitude          Float
+  longitude         Float
+  totalCost         Float
+  coordinates       String?
   closingReflection String?
-  tripId        String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  tripId            String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   trip            Trip?            @relation(fields: [tripId], references: [id], onDelete: SetNull)
   expenses        Expense[]
@@ -59,6 +59,7 @@ model Story {
   recommendations Recommendation[]
   cityFrames      CityFrame[]
   photoMemories   PhotoMemory[]
+  likes           Like[]
 }
 
 model Expense {
@@ -132,4 +133,24 @@ model PhotoMemory {
   story    Story   @relation(fields: [storyId], references: [id], onDelete: Cascade)
 
   @@index([storyId, order])
+}
+
+// ── NEW ──────────────────────────────────────────────────────────────────────
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  source    String?  // "homepage" | "story_page"
+  storySlug String?  // which story they subscribed from
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  storyId   String
+  visitorId String
+  createdAt DateTime @default(now())
+  story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  @@unique([storyId, visitorId])
+  @@index([storyId])
 }
