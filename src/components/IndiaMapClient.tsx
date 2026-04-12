@@ -297,7 +297,7 @@ export default function IndiaMapClient({
               <span className="text-xs font-mono" style={{ color: "var(--text-muted)" }}>
                 Jump to:
               </span>
-              {[...visitedStates].map((s) => (
+              {Array.from(visitedStates).map((s) => (
                 <button
                   key={s}
                   onClick={() => setSelectedState(s)}
