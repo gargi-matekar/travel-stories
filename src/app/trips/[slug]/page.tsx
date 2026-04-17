@@ -5,6 +5,7 @@ import Link from "next/link";
 import TripRouteMap from "@/components/Triproutemap";
 import ExpenseBreakdown from "@/components/ExpenseBreakdown";
 import PassportStamps from "@/components/animations/PassportStamps";
+import type { Metadata } from 'next'
 
 interface Props {
   params: { slug: string };
@@ -13,6 +14,45 @@ interface Props {
 export async function generateStaticParams() {
   const trips = await prisma.trip.findMany({ select: { slug: true } });
   return trips.map((t) => ({ slug: t.slug }));
+}
+
+const BASE_URL = 'https://travel-stories-eight.vercel.app'
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const trip = await prisma.trip.findUnique({
+    where: { slug: params.slug },
+    select: {
+      title: true,
+      slug: true,
+      description: true,
+      coverImage: true,
+    },
+  })
+
+  if (!trip) return {}
+
+  const pageTitle = `${trip.title} | TheRoamingPostcards`
+  const description = trip.description ?? `A cinematic journey — ${trip.title}. Travel stories from the road, by Gargi.`
+
+  return {
+    title: pageTitle,
+    description,
+    openGraph: {
+      title: pageTitle,
+      description,
+      type: 'article',
+      url: `${BASE_URL}/trips/${trip.slug}`,
+      images: trip.coverImage
+        ? [{ url: trip.coverImage, width: 1200, height: 630, alt: trip.title }]
+        : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description,
+      images: trip.coverImage ? [trip.coverImage] : [],
+    },
+  }
 }
 
 export default async function TripPage({ params }: Props) {
